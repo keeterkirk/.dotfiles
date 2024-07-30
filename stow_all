@@ -1,1 +1,2 @@
 stow -vv alacritty
+stow -vv neovim
