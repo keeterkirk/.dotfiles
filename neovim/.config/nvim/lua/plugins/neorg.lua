@@ -21,14 +21,6 @@ return {
               icon_preset = "diamond",
             },
           },
-          ["core.dirman"] = {
-            config = {
-              workspaces = {
-                notes = "~/notes",
-                yonder = "~/tabletop_rpg/Dungeons and Dragons 5e/My Campaigns/Yonder/neorg",
-              },
-            },
-          },
         },
       }
     end,
