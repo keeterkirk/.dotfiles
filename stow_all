@@ -1,2 +1,4 @@
 stow -vv alacritty
 stow -vv neovim
+stow -vv tmux
+stow -vv tig
