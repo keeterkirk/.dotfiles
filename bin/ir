@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+# vim:filetype=ruby
+
+class SmartInteractiveRebase
+  def call
+    if no_rebase_allowed?
+      puts "Cannot rebase #{current_branch_name}"
+    elsif manually_defined?
+      system("git rebase -i #{ARGV.first}")
+    else
+      system("git rebase -i #{base_branch}")
+    end
+  end
+
+  private
+
+  def no_rebase_allowed?
+    %w[main master develop].include?(current_branch_name)
+  end
+
+  def manually_defined?
+    !ARGV.first.nil?
+  end
+
+  def base_branch
+    `zsh -lic 'echo $(base_branch)'`.strip.chomp
+  end
+
+  def current_branch_name
+    `git branch --show-current`.strip.chomp
+  end
+end
+
+SmartInteractiveRebase.new.call

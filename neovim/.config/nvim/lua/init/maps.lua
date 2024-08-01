@@ -16,4 +16,3 @@ map('n', '<leader>fz', ':tabnew %<CR>', { noremap = true, desc = 'zoom split' })
 map('n', 'N', 'Nzz', options)
 map('n', 'S', 'i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>$', options) -- split line
 map('n', 'n', 'nzz', options)
-map('n', '<leader>ws', ':e ~/dev/standup.norg<CR>', { desc = 'standup notes' })

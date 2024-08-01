@@ -1,4 +1,5 @@
 stow -vv alacritty
 stow -vv neovim
-stow -vv tmux
 stow -vv tig
+stow -vv tmux
+stow -vv zsh

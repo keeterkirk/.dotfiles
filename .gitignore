@@ -1,0 +1,7 @@
+.DS_Store
+
+neovim/.config/nvim/tmp
+neovim/.config/nvim/undodir
+neovim/.config/nvim/plugged
+
+tmux/.tmux/plugins/tmux-fingers
