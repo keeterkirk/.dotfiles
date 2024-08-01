@@ -1,7 +1,6 @@
 export DOTFILES=$HOME/.dotfiles
 export PATH="$DOTFILES/bin:$PATH"
 
-export BROWSER=/usr/bin/chrome
 export VISUAL=nvim
 export EDITOR=$VISUAL
 export PAGER=less

@@ -1,4 +1,3 @@
-export BROWSER=/usr/bin/chrome
 export VISUAL=nvim
 export EDITOR=$VISUAL
 export PAGER=less
