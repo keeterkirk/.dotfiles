@@ -56,6 +56,9 @@ alias v="nvim"
 # }}}
 # {{{ zsh
 alias :q="exit"
+alias la="ls --color -pa"
+alias ls="ls --color -p"
+alias ll="ls --color -plh"
 
 alias rzsh="source ~/.zshrc && source ~/.zshrc.local"
 # }}}
