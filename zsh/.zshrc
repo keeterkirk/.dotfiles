@@ -46,12 +46,18 @@ prompt filthy
 [[ -f ~/.aliases ]] && source ~/.aliases
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
-source /opt/homebrew/opt/fzf/shell/completion.zsh
-source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
+if [ -d "/home/linuxbrew" ]; then
+  source /home/linuxbrew/.linuxbrew/opt/fzf/shell/completion.zsh
+  source /home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh
+  source /home/linuxbrew/.linuxbrew/opt/chruby/share/chruby/chruby.sh
+else
+  source /opt/homebrew/opt/fzf/shell/completion.zsh
+  source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
+  source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+fi
 
-source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
 source ~/.zsh/functions/chruby_auto.sh
 
-chruby ruby-3.3.3
+chruby ruby-3.4.1
 
 opentmux
