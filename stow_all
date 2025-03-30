@@ -5,3 +5,5 @@ stow -vv tmux
 stow -vv zsh
 stow -vv git
 stow -vv i3
+stow -vv polybar
+stow -vv rofi
