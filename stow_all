@@ -4,3 +4,4 @@ stow -vv tig
 stow -vv tmux
 stow -vv zsh
 stow -vv git
+stow -vv i3
