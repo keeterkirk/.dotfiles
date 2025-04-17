@@ -52,8 +52,4 @@ else
   source /usr/share/fzf/completion.zsh
 fi
 
-source ~/.zsh/functions/chruby_auto.sh
-
-chruby ruby-3.4.1
-
 opentmux
