@@ -61,7 +61,7 @@ return {
           'gopls',
           'jsonls',
           'solargraph',
-          'tsserver',
+          'ts_ls',
           'volar',
           'yamlls'
         }
