@@ -1,7 +1,0 @@
-brew "alacritty"
-brew "go"
-brew "fzf"
-brew "neovim"
-brew "tig"
-brew "tmux"
-brew "bat"
