@@ -13,7 +13,9 @@ export CLICOLOR=1
 export FZF_DEFAULT_COMMAND='ag -g "" --hidden --ignore .git'
 export FZF_COMPLETION_TRIGGER=',,'
 if [ -n "$TMUX" ]; then
-  export FZF_DEFAULT_OPTS='--tmux 80%'
+  if [[ "$TMUX" != *"tmate"* ]]; then
+    export FZF_DEFAULT_OPTS='--tmux 80%'
+  fi
 fi
 
 export TIMEFMT=$'user\t%U\nsys\t%S\nreal\t%E\nmax mem\t%Mkb\ncpu\t%P\n'
