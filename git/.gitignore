@@ -1,0 +1,9 @@
+.ruby-gemset
+metadocs/
+.ruby-lsp/
+.ignore
+
+node_modules/
+public/packs/
+public/sprockets/
+npm-debug.log
