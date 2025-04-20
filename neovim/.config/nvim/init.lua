@@ -36,4 +36,3 @@ _G.tests = require('tests')
 require('lazy').setup('plugins')
 
 require('init/maps')
-require('init/commands')
