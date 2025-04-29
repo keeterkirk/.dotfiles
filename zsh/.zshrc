@@ -2,9 +2,7 @@ unsetopt nomatch
 setopt extendedglob
 
 # completion
-fpath=(~/.zsh/completion ~/.zsh/filthy $fpath)
-autoload -U compinit
-compinit
+fpath=(~/.zsh/filthy $fpath)
 
 # completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
@@ -49,15 +47,9 @@ prompt filthy
 if [ -d "/home/linuxbrew" ]; then
   source /home/linuxbrew/.linuxbrew/opt/fzf/shell/completion.zsh
   source /home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh
-  source /home/linuxbrew/.linuxbrew/opt/chruby/share/chruby/chruby.sh
 else
-  source /opt/homebrew/opt/fzf/shell/completion.zsh
-  source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
-  source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+  source /usr/share/fzf/key-bindings.zsh
+  source /usr/share/fzf/completion.zsh
 fi
-
-source ~/.zsh/functions/chruby_auto.sh
-
-chruby ruby-3.4.1
 
 opentmux
