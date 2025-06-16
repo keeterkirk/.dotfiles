@@ -42,4 +42,4 @@ mods = "Control|Alt"
 hide_when_typing = true
 
 [font]
-size = 20.0
+size = 16.0
