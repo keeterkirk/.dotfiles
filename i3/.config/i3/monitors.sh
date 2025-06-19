@@ -11,3 +11,5 @@ if [ "$CURRENT_HOSTNAME" = "linux-kkeeter" ]; then
     xrandr --output "$laptop" --off
   fi
 fi
+
+~/.config/polybar/launch.sh
