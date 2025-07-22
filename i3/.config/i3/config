@@ -65,11 +65,11 @@ set $workspace1 "1/CODE"
 set $workspace2 "2/CHAT"
 set $workspace3 "3/BROWSER"
 set $workspace4 "4/H-BROWSER"
-set $workspace5 "5"
-set $workspace6 "6"
-set $workspace7 "7"
-set $workspace8 "8"
-set $workspace9 "9"
+set $workspace5 "5/CALENDAR"
+set $workspace6 "6/TASKS"
+set $workspace7 "7/LEARNING"
+set $workspace8 "8/LEARNINGREPS"
+set $workspace9 "9/GO"
 set $workspace10 "0"
 
 bindsym $mod+1 workspace $workspace1
@@ -104,7 +104,7 @@ bindsym $mod+Control+r restart
 bindsym $mod+Control+e mode "$mode_system"
 set $mode_system (m)onitors, (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym l exec --no-startup-id i3lock, mode "default"
     bindsym s exec --no-startup-id i3exit suspend, mode "default"
     bindsym u exec --no-startup-id i3exit switch_user, mode "default"
     bindsym e exec --no-startup-id i3exit logout, mode "default"
