@@ -21,5 +21,6 @@ fi
 export TIMEFMT=$'user\t%U\nsys\t%S\nreal\t%E\nmax mem\t%Mkb\ncpu\t%P\n'
 
 export WORK_DIR="$HOME/dev/prizepicks"
+export TEST_DATABASE_URL="postgresql://postgres:password@localhost/predict-picks-dev"
 
 [[ -f ~/.zshenv.local ]] && source ~/.zshenv.local
