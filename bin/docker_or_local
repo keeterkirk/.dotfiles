@@ -5,7 +5,7 @@ ALL_FILES = Dir.entries(Dir.pwd).freeze
 COMMAND = ARGV.reject { |e| e == '--force-local' }.join(' ')
 
 def force_local?
-  ARGV.include?('--force-local')
+  ARGV.include?('--force-local') || File.exist?('.nodocker')
 end
 
 def prizepicks?
@@ -41,7 +41,7 @@ if force_local?
 elsif prizepicks?
   current_directory = Dir.pwd.split('/').last
 
-  folder_map = %w[prizepicks-devenv].flat_map do |devenv_repo|
+  folder_map = %w[prizepicks-devenv devex-devenv].flat_map do |devenv_repo|
     repo_list_path = "#{ENV['WORK_DIR']}/#{devenv_repo}/scripts/repository_list"
     File.readlines(repo_list_path).map(&:strip).map { |repo| [repo, devenv_repo] }
   end.to_h

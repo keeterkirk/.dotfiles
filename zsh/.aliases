@@ -28,6 +28,7 @@ alias k="docker"
 alias c="docker compose"
 alias docker-nuke="docker container prune -f; docker volume prune -f; docker image prune -f"
 alias rebuild="docker compose down; RESEED=true docker compose up -d"
+alias cbuild="COMPOSE_PROFILES='*' docker compose build --build-arg UID=$(id -u) --build-arg GID=$(id -g) --no-cache"
 # }}}
 # {{{ git
 alias churn="git log --all --name-only --format='format:' | grep -v '^$' | sort | uniq -c | sort -n | tail"
@@ -36,6 +37,8 @@ alias cl="git clone"
 
 alias d="git diff"
 alias ds="git diff --staged"
+alias dw="git diff -w"
+alias dsw="git diff --staged -w"
 
 alias gp="git push"
 alias gb="git branch"
@@ -59,8 +62,15 @@ alias :q="exit"
 alias la="ls --color -pa"
 alias ls="ls --color -p"
 alias ll="ls --color -plh"
+alias tree="tree -C"
 
 alias rzsh="source ~/.zshrc && source ~/.zshrc.local"
+# }}}
+# {{{ utilities
+alias j="just"
+alias serve="ruby -run -e httpd ./ -p 9999"
+alias ycal="cal $(date +"%Y")"
+alias got="echo 'go mod tidy' && go mod tidy && echo 'go mod download' && go mod download"
 # }}}
 
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
