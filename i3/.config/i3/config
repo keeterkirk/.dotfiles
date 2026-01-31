@@ -102,7 +102,7 @@ bindsym $mod+Control+c reload
 bindsym $mod+Control+r restart
 
 bindsym $mod+Control+e mode "$mode_system"
-set $mode_system (m)onitors, (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+set $mode_system (m)onitors, (Shift+m)laptop, (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown, (w)akeup
 mode "$mode_system" {
     bindsym l exec --no-startup-id i3lock, mode "default"
     bindsym s exec --no-startup-id i3exit suspend, mode "default"
@@ -111,7 +111,9 @@ mode "$mode_system" {
     bindsym h exec --no-startup-id i3exit hibernate, mode "default"
     bindsym r exec --no-startup-id i3exit reboot, mode "default"
     bindsym m exec --no-startup-id ~/.config/i3/monitors.sh, mode "default"
+    bindsym Shift+m exec --no-startup-id ~/.config/i3/monitors-reverse.sh, mode "default"
     bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+    bindsym w exec --no-startup-id "xrandr --output eDP --auto && xset dpms force on", mode "default"
 
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
