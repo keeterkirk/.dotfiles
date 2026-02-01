@@ -14,6 +14,6 @@ else
   source /usr/share/chruby/chruby.sh
 fi
 
-chruby ruby-3.4.2
+chruby ruby-3.4.3
 
 source ~/.zsh/functions/chruby_auto.sh
