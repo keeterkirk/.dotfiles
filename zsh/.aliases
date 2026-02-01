@@ -71,6 +71,8 @@ alias j="just"
 alias serve="ruby -run -e httpd ./ -p 9999"
 alias ycal="cal $(date +"%Y")"
 alias got="echo 'go mod tidy' && go mod tidy && echo 'go mod download' && go mod download"
+alias p1="ppwf --create_issue --team PLA"
+alias pn="next_story"
 # }}}
 
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
