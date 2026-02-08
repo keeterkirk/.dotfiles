@@ -9,21 +9,36 @@ font pango:Hack Nerd Font 12
 floating_modifier $mod
 
 # {{{ startup
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+# Monitor setup
+exec --no-startup-id ~/.config/i3/monitors.sh
 
-exec --no-startup-id /home/kthibodeaux/.config/i3/monitors.sh
+# System tray utilities
 exec --no-startup-id nm-applet
-exec --no-startup-id xfce4-power-manager
-exec --no-startup-id pamac-tray
-exec --no-startup-id clipit
 exec --no-startup-id blueman-applet
-exec --no-startup-id xautolock -time 10 -locker blurlock
+
+# Auto-lock screen after 10 minutes (install xautolock first: yay -S xautolock)
+# exec --no-startup-id xautolock -time 10 -locker i3lock
+
+# Compositor (transparency, shadows, animations)
 exec --no-startup-id picom
-exec_always --no-startup-id ff-theme-util
-exec_always --no-startup-id fix_xcursor
+
+# Screen color temperature
 exec --no-startup-id redshift-gtk -l 33:-84 -O 4000
+
+# Custom keymaps (if ~/.Xmodmap exists)
 exec --no-startup-id sleep 4 && xmodmap ~/.Xmodmap &
+
+# Status bar
 exec_always --no-startup-id ~/.config/polybar/launch.sh
+
+# Set wallpaper (if you have one)
+exec_always --no-startup-id feh --bg-scale ~/.config/i3/wallpaper.jpg 2>/dev/null || true
+
+# Programs not installed (uncomment when installed):
+# exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+# exec --no-startup-id xfce4-power-manager
+# exec --no-startup-id pamac-tray
+# exec --no-startup-id clipit
 # }}}
 # {{{ floaters
 for_window [class="Clipgrab"] floating enable

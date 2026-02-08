@@ -1,5 +1,6 @@
 export DOTFILES=$HOME/.dotfiles
-export PATH="$DOTFILES/bin:$HOME/opt/bin:$HOME/.local/share/bob/nvim-bin:/home/linuxbrew/.linuxbrew/bin:$PATH"
+export PATH="$DOTFILES/bin:$HOME/opt/bin:$HOME/.local/share/bob/nvim-bin:/home/linuxbrew/.linuxbrew/bin:/opt/cuda/bin:$PATH"
+export LD_LIBRARY_PATH="/opt/cuda/lib64:${LD_LIBRARY_PATH}"
 
 export VISUAL=nvim
 export EDITOR=$VISUAL

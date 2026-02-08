@@ -1,6 +1,11 @@
 unset RUBY_AUTO_VERSION
 
 function chruby_auto() {
+  # Check if chruby is available before trying to use it
+  if ! type chruby &>/dev/null; then
+    return 0
+  fi
+
   local dir="$PWD/" version
 
   until [[ -z "$dir" ]]; do
