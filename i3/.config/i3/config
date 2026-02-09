@@ -28,8 +28,8 @@ exec --no-startup-id redshift-gtk -l 33:-84 -O 4000
 # Custom keymaps (if ~/.Xmodmap exists)
 exec --no-startup-id sleep 4 && xmodmap ~/.Xmodmap &
 
-# Status bar
-exec_always --no-startup-id ~/.config/polybar/launch.sh
+# Status bar is launched by monitors.sh
+# exec_always --no-startup-id ~/.config/polybar/launch.sh
 
 # Set wallpaper (if you have one)
 exec_always --no-startup-id feh --bg-scale ~/.config/i3/wallpaper.jpg 2>/dev/null || true
