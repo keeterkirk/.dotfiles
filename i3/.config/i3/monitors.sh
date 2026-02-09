@@ -14,4 +14,4 @@ if [ "$CURRENT_HOSTNAME" = "linux-kkeeter" ]; then
   fi
 fi
 
-# Polybar is launched from i3 config instead
+~/.config/polybar/launch.sh
