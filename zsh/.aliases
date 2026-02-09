@@ -40,7 +40,7 @@ alias ds="git diff --staged"
 alias dw="git diff -w"
 alias dsw="git diff --staged -w"
 
-alias gp="git push"
+# alias gp="git push"  # Commented out - using function from git.zsh instead
 alias gb="git branch"
 alias gcp="git cherry-pick"
 alias gun="git reset HEAD"
