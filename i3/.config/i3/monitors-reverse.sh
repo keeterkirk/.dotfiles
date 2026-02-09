@@ -3,12 +3,16 @@
 CURRENT_HOSTNAME=$(hostname)
 
 if [ "$CURRENT_HOSTNAME" = "linux-kkeeter" ]; then
-  monitor=$(xrandr -q | grep " connected" | cut -d" " -f1 | grep HDMI)
-  laptop=$(xrandr -q | grep " connected" | cut -d" " -f1 | grep DP)
+  # Get internal laptop display (typically eDP-* or LVDS*)
+  laptop=$(xrandr -q | grep " connected" | cut -d" " -f1 | grep -E "^(eDP|LVDS)")
+  # Get external monitor (any connected display that's not the internal one)
+  monitor=$(xrandr -q | grep " connected" | cut -d" " -f1 | grep -vE "^(eDP|LVDS)" | head -n1)
 
   if [ -n "$laptop" ]; then
     xrandr --output "$laptop" --auto --primary
-    xrandr --output "$monitor" --off
+    if [ -n "$monitor" ]; then
+      xrandr --output "$monitor" --off
+    fi
   fi
 fi
 
