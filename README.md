@@ -17,6 +17,19 @@ bash setup
 ./stow_all
 ```
 
+## Dependencies
+
+### Required Ruby Gems
+
+Some shell functions require Ruby gems to be installed:
+
+```bash
+# git-up - Used by the 'dev' shell function for smart git updates
+gem install git-up
+```
+
+The `dev` function uses `git-up` to checkout the main branch and update it. Without this gem, you'll get a "command not found: git-up" error.
+
 ## Documentation
 
 - **[ARCHITECTURE.md](ARCHITECTURE.md)** - Complete guide to how this dotfiles system works (stow, directory structure, troubleshooting)

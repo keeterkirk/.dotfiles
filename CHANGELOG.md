@@ -2,6 +2,17 @@
 
 All notable changes to this dotfiles repository.
 
+## [2026-02-13] - Dependencies Documentation & git-up
+
+### Added
+- **Dependencies section** in README.md documenting required Ruby gems
+- **git-up troubleshooting** in ARCHITECTURE.md for "command not found" errors
+- Installed `git-up` gem (v0.5.12) for the `dev` shell function
+
+### Fixed
+- "command not found: git-up" error when using `dev` shell function
+- Documentation now explicitly lists gem dependencies
+
 ## [2026-02-13] - Bin Directory Restructuring & Voice-to-Text
 
 ### Changed

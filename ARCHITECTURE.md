@@ -311,6 +311,21 @@ If not, add to `.zshrc`:
 export PATH="$HOME/bin:$PATH"
 ```
 
+### "command not found: git-up"
+
+The `dev` shell function requires the `git-up` Ruby gem:
+
+```bash
+gem install git-up
+```
+
+The `dev` function is used to quickly switch to the main branch and update it:
+```bash
+dev  # Equivalent to: git checkout main && git-up
+```
+
+`git-up` is a smart alternative to `git pull` that updates all your local branches and uses rebase by default.
+
 ## Best Practices
 
 ### 1. Always Use Stow
