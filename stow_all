@@ -1,4 +1,5 @@
 stow -vv alacritty
+stow -vv bin
 stow -vv git
 stow -vv i3
 stow -vv polybar

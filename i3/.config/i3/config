@@ -64,6 +64,10 @@ bindsym --release $mod+z exec scrot -s - | xclip -selection clipboard -t image/p
 
 # kill focused window
 bindsym $mod+q kill
+
+# voice-to-text (speak and it types into active window)
+# TODO: Requires Google Cloud setup - waiting on permissions issue
+# bindsym $mod+space exec ~/bin/voice-to-text
 # }}}
 # {{{ volume
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%; exec pactl set-sink-mute @DEFAULT_SINK@ 0
