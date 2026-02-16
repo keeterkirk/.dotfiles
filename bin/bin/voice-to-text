@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
 Voice-to-Text using Google Cloud Speech-to-Text API
 Streams audio from microphone and types transcription into active window.
@@ -13,8 +13,25 @@ import queue
 import threading
 import time
 from google.cloud import speech
-import pyaudio
 import subprocess
+
+# Suppress ALSA/JACK warnings by redirecting stderr during PyAudio operations
+# These warnings are harmless - PyAudio tries different audio backends before finding PulseAudio
+class SuppressStderr:
+    def __enter__(self):
+        self.stderr_fd = sys.stderr.fileno()
+        self.devnull = os.open(os.devnull, os.O_WRONLY)
+        self.old_stderr = os.dup(self.stderr_fd)
+        os.dup2(self.devnull, self.stderr_fd)
+        return self
+
+    def __exit__(self, *args):
+        os.dup2(self.old_stderr, self.stderr_fd)
+        os.close(self.old_stderr)
+        os.close(self.devnull)
+
+with SuppressStderr():
+    import pyaudio
 
 # Audio recording parameters
 RATE = 16000
@@ -30,15 +47,27 @@ class MicrophoneStream:
         self.closed = True
 
     def __enter__(self):
-        self._audio_interface = pyaudio.PyAudio()
-        self._audio_stream = self._audio_interface.open(
-            format=pyaudio.paInt16,
-            channels=1,
-            rate=self._rate,
-            input=True,
-            frames_per_buffer=self._chunk,
-            stream_callback=self._fill_buffer,
-        )
+        # Suppress ALSA/JACK warnings during audio initialization
+        with SuppressStderr():
+            self._audio_interface = pyaudio.PyAudio()
+
+            # Find the default PulseAudio/PipeWire device for microphone sharing
+            # This allows using the mic while on calls (Google Hangout, etc.)
+            default_device = None
+            try:
+                default_device = self._audio_interface.get_default_input_device_info()['index']
+            except:
+                pass  # Will use system default if this fails
+
+            self._audio_stream = self._audio_interface.open(
+                format=pyaudio.paInt16,
+                channels=1,
+                rate=self._rate,
+                input=True,
+                input_device_index=default_device,  # Use default device (PipeWire-compatible)
+                frames_per_buffer=self._chunk,
+                stream_callback=self._fill_buffer,
+            )
         self.closed = False
         return self
 
@@ -138,6 +167,31 @@ def listen_print_loop(responses):
 
 
 def main():
+    # Toggle functionality: check if already running
+    pid_file = "/tmp/voice-to-text.pid"
+
+    if os.path.exists(pid_file):
+        # Another instance is running - kill it and exit
+        try:
+            with open(pid_file, 'r') as f:
+                old_pid = int(f.read().strip())
+            os.kill(old_pid, 15)  # SIGTERM
+            os.remove(pid_file)
+            show_notification("Voice input stopped", "low")
+            print("Stopped running instance")
+            sys.exit(0)
+        except (ProcessLookupError, ValueError):
+            # Process doesn't exist or invalid PID - remove stale file
+            os.remove(pid_file)
+
+    # Write our PID to the lock file
+    with open(pid_file, 'w') as f:
+        f.write(str(os.getpid()))
+
+    # Clean up PID file on exit
+    import atexit
+    atexit.register(lambda: os.path.exists(pid_file) and os.remove(pid_file))
+
     # Check for credentials
     if not os.environ.get("GOOGLE_APPLICATION_CREDENTIALS"):
         show_notification(

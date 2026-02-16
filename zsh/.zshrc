@@ -59,3 +59,6 @@ export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export PATH="$HOME/.local/bin:$PATH"
+
+# Google Cloud credentials for voice-to-text
+export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.config/gcloud/speech-to-text-key.json"
