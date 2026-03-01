@@ -10,10 +10,12 @@ path=(~/.dotfiles/bin ~/opt/bin ~/go/bin $path)
 
 if [ -d "/home/linuxbrew" ]; then
   source /home/linuxbrew/.linuxbrew/opt/chruby/share/chruby/chruby.sh
-else
+elif [ -f "/usr/local/share/chruby/chruby.sh" ]; then
+  source /usr/local/share/chruby/chruby.sh
+elif [ -f "/usr/share/chruby/chruby.sh" ]; then
   source /usr/share/chruby/chruby.sh
 fi
 
-chruby ruby-3.4.3
+command -v chruby > /dev/null && chruby ruby-3.4.3
 
-source ~/.zsh/functions/chruby_auto.sh
+[ -f ~/.zsh/functions/chruby_auto.sh ] && source ~/.zsh/functions/chruby_auto.sh

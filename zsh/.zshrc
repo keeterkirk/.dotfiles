@@ -47,6 +47,9 @@ prompt filthy
 if [ -d "/home/linuxbrew" ]; then
   source /home/linuxbrew/.linuxbrew/opt/fzf/shell/completion.zsh
   source /home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh
+elif [ -d "/usr/share/doc/fzf/examples" ]; then
+  source /usr/share/doc/fzf/examples/key-bindings.zsh
+  source /usr/share/doc/fzf/examples/completion.zsh
 else
   source /usr/share/fzf/key-bindings.zsh
   source /usr/share/fzf/completion.zsh
