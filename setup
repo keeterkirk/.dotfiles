@@ -68,3 +68,4 @@ sudo usermod -aG docker $USER
 . ~/.dotfiles/setup_steps/ruby.sh
 . ~/.dotfiles/setup_steps/neovim.sh
 . ~/.dotfiles/setup_steps/tmux_plugins.sh
+. ~/.dotfiles/setup_steps/fonts.sh
