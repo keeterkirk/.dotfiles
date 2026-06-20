@@ -44,6 +44,7 @@ exec_always --no-startup-id feh --bg-scale ~/.config/i3/wallpaper.jpg 2>/dev/nul
 for_window [class="Clipgrab"] floating enable
 for_window [title="File Transfer*"] floating enable
 for_window [class="Lightdm-settings"] floating enable
+for_window [class="privateinternetaccess"] move to workspace $workspace2
 # }}}
 # {{{ gaps
 gaps inner 10

@@ -12,6 +12,12 @@ if [ "$CURRENT_HOSTNAME" = "linux-kkeeter" ]; then
     xrandr --output "$monitor" --auto --primary
     xrandr --output "$laptop" --off
   fi
+elif [ "$CURRENT_HOSTNAME" = "kirk-papigrande" ]; then
+  # Desktop: single monitor, set as primary for polybar main bar
+  monitor=$(xrandr -q | grep " connected" | head -n1 | cut -d" " -f1)
+  if [ -n "$monitor" ]; then
+    xrandr --output "$monitor" --primary
+  fi
 fi
 
 ~/.config/polybar/launch.sh
