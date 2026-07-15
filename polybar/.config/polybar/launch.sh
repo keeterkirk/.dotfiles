@@ -9,6 +9,15 @@ flock 9
 killall -q polybar
 while pgrep -u "$UID" -x polybar >/dev/null; do sleep 0.2; done
 
+# Host-aware module list for [bar/main]. Desktop (kirk-papigrande) has an
+# NVIDIA GPU and no battery -> show gpu; everything else (laptops) keeps the
+# battery indicator. Unset falls through to the default in config.ini.
+case "$(hostname)" in
+  kirk-papigrande)
+    export POLYBAR_MODULES_RIGHT="pulseaudio memory cpu gpu systray date"
+    ;;
+esac
+
 if type "xrandr" >/dev/null; then
   # Only iterate ACTIVE (powered) outputs. --listactivemonitors skips
   # connected-but-off displays (e.g. the laptop eDP when external is primary),
