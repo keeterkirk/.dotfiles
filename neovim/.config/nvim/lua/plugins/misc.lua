@@ -61,4 +61,22 @@ return {
     {
     'vimwiki/vimwiki',
   },
+  {
+    'NStefan002/screenkey.nvim',
+    lazy = false,
+    version = '*',
+    opts = {
+      win_opts = {
+        row = vim.o.lines - vim.o.cmdheight - 2,
+        col = vim.o.columns - 2,
+        anchor = 'SE',
+      },
+      compress_after = 3,
+      clear_after = 3,
+      show_leader = true,
+    },
+    keys = {
+      { '<leader>sk', '<cmd>Screenkey<CR>', desc = 'toggle screenkey' },
+    },
+  },
 }

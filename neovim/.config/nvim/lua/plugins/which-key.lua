@@ -13,6 +13,7 @@ return {
       { "<leader>g",  name = "+git" },
       { "<leader>r",  name = "+specs" },
       { "<leader>l",  name = "+lsp" },
+      { "<leader>s",  name = "+screenkey" },
     })
   end,
 }
