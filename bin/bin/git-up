@@ -9,6 +9,18 @@
 #
 #     `git up`
 
+# base_branch normally comes from ~/.zsh/functions/git.zsh, which scripts
+# don't load.
+base_branch() {
+  if git rev-parse -q --verify develop > /dev/null; then
+    echo "develop"
+  elif git rev-parse -q --verify main > /dev/null; then
+    echo "main"
+  else
+    echo "master"
+  fi
+}
+
 # Remember current branch.
 START_BRANCH=$(git branch --show-current --format='%(refname:short)')
 

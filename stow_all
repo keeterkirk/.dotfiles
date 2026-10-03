@@ -1,9 +1,17 @@
-stow -vv alacritty
-stow -vv bin
-stow -vv git
-stow -vv i3
-stow -vv polybar
-stow -vv neovim
-stow -vv tig
-stow -vv tmux
-stow -vv zsh
+#!/usr/bin/env bash
+# Stow the packages listed in packages/common plus packages/<os>.
+# Works from any clone location; always targets $HOME. Safe to re-run.
+
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+case "$(uname -s)" in
+  Linux)  os=linux ;;
+  Darwin) os=darwin ;;
+  *)      echo "unsupported OS: $(uname -s)"; exit 1 ;;
+esac
+
+packages=$(sed 's/#.*//' "$DOTFILES/packages/common" "$DOTFILES/packages/$os")
+
+for package in $packages; do
+  stow -d "$DOTFILES" -t "$HOME" -vv "$package"
+done

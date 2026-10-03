@@ -1,0 +1,67 @@
+# vi: set ft=sh :
+# Arch / EndeavourOS packages. Sourced by ./setup on Linux.
+
+yay -Syyu
+
+install_package() {
+  yay -S --noconfirm $1
+}
+
+install_package "stow"
+
+install_package "alacritty"
+install_package "aspell"
+install_package "avr-gcc"
+install_package "avr-libc"
+install_package "aws-cli"
+install_package "bat"
+install_package "bob"
+install_package "btop"
+install_package "chruby"
+install_package "ctop"
+install_package "debtap"
+install_package "delve"
+install_package "diff-so-fancy"
+install_package "direnv"
+install_package "discord"
+install_package "docker"
+install_package "docker-compose"
+install_package "evince"
+install_package "fd"
+install_package "feh"
+install_package "fzf"
+install_package "git-delta"
+install_package "glib2"
+install_package "go"
+install_package "golangci-lint"
+install_package "google-chrome"
+install_package "htop"
+install_package "httpie"
+install_package "lazydocker-bin"
+install_package "mpv"
+install_package "ncdu"
+install_package "nodejs"
+install_package "npm"
+install_package "openssh"
+install_package "python-neovim"
+install_package "ripgrep"
+install_package "ruby-install"
+install_package "sad"
+install_package "signal-desktop"
+install_package "shellcheck"
+install_package "teensy_loader_cli"
+install_package "tig"
+install_package "tmate"
+install_package "tmux"
+install_package "ttf-hack-nerd"
+install_package "unzip"
+install_package "yarn"
+install_package "xclip"
+install_package "zsh"
+
+fc-cache -f -v
+sudo systemctl enable sshd
+sudo systemctl enable docker.service
+sudo usermod -aG docker $USER
+
+. "$DOTFILES/setup_steps/fonts.sh"

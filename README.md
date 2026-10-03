@@ -1,21 +1,40 @@
 # dotfiles
 
-Stow-based dotfiles for Arch Linux + i3wm + Alacritty + Tmux + Neovim
+Stow-based dotfiles for Arch Linux (i3wm + polybar) and macOS, sharing
+Alacritty + Tmux + Neovim + Zsh.
 
 ## Quick Start
 
-These instructions are for a fresh Endeavour GNOME install.
+Works on a fresh Endeavour/Arch install or a fresh Mac. `setup` detects the OS
+(`uname -s`) and installs packages with `yay` (Linux) or Homebrew + `Brewfile`
+(macOS), then runs `stow_all`.
 
 Before running the below commands:
 
 * Make sure you can clone from GitHub by adding your SSH key to your profile.
+* Clone to `~/.dotfiles` (configs reference that path). On a Mac, don't put it
+  in `~/Desktop` or `~/Documents` if iCloud Desktop & Documents sync is on.
 
 ```bash
 git clone git@github.com:keeterkirk/.dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 bash setup
-./stow_all
 ```
+
+`stow_all` stows `packages/common` plus `packages/linux` or `packages/darwin`.
+Re-run it any time; it always targets `$HOME`.
+
+## Per-OS and per-machine config
+
+| Where | Loaded when | Use for |
+|---|---|---|
+| `packages/{common,linux,darwin}` | `stow_all` | Which stow packages a machine gets |
+| `zsh/.zsh/os/{linux,darwin}.zsh` | `.zshrc`, by `$DOTFILES_OS` | OS-specific shell setup |
+| `zsh/.zsh/hosts/<host>.zsh` | `.zshenv`, by `$DOTFILES_HOST` | Committed per-machine env (e.g. `RSPEC_CORES`) |
+| `~/.zshenv.local`, `~/.zshrc.local`, `~/.aliases.local`, `~/.gitconfig.local`, `~/.secrets` | always, if present | Uncommitted per-machine settings and secrets |
+
+`$DOTFILES_HOST` is `hostname -s` on Linux and `scutil --get LocalHostName` on
+macOS. `~/.gitconfig.local` should hold your `[user]` name and email.
 
 ## Dependencies
 
@@ -40,15 +59,19 @@ The `dev` function uses `git-up` to checkout the main branch and update it. With
 
 ```
 .dotfiles/
-├── alacritty/     # Terminal emulator
-├── bin/           # Custom scripts (symlink to ~/bin/)
-├── git/           # Git config
-├── i3/            # Window manager
-├── neovim/        # Editor
-├── polybar/       # Status bar
-├── tig/           # Git TUI
-├── tmux/          # Terminal multiplexer
-└── zsh/           # Shell
+├── alacritty/        # Terminal emulator
+├── alacritty-macos/  # macOS-only Alacritty overrides (imported by alacritty.toml)
+├── bin/              # Custom scripts (symlink to ~/bin/)
+├── git/              # Git config
+├── i3/               # Window manager (Linux)
+├── neovim/           # Editor
+├── polybar/          # Status bar (Linux)
+├── tig/              # Git TUI
+├── tmux/             # Terminal multiplexer
+├── zsh/              # Shell
+├── packages/         # Stow package lists per OS
+├── setup_steps/      # arch.sh, macos.sh + shared steps
+└── Brewfile          # macOS packages
 ```
 
 ## How It Works
@@ -75,10 +98,11 @@ cp ~/.config/newapp/config.yml ~/.dotfiles/newapp/.config/newapp/
 cd ~/.dotfiles
 stow -vv newapp
 
-# Add to stow_all
-echo "stow -vv newapp" >> stow_all
+# Add to the package list for the OSes that should get it
+echo "newapp" >> packages/common   # or packages/linux, packages/darwin
 ```
 
 ## rspec
 
-To run `rspec` with more or less cores, set `RSPEC_CORES` in `~/.zshenv`
+To run `rspec` with more or less cores, set `RSPEC_CORES` in
+`zsh/.zsh/hosts/<host>.zsh` (committed) or `~/.zshenv.local` (defaults to 12).

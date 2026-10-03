@@ -2,6 +2,42 @@
 
 All notable changes to this dotfiles repository.
 
+## [2026-10-03] - macOS Support
+
+### Added
+- `packages/{common,linux,darwin}` stow lists; `stow_all` now targets `$HOME`
+  from any clone location
+- `setup` dispatches by OS to `setup_steps/arch.sh` (old package list) or
+  `setup_steps/macos.sh` (Xcode CLT, Homebrew, `Brewfile`, Alacritty DMG)
+- `zsh/.zsh/os/{linux,darwin}.zsh` and `zsh/.zsh/hosts/<host>.zsh`, with
+  `DOTFILES_OS` / `DOTFILES_HOST` set in `.zshenv`
+- `alacritty-macos` package (Option-as-Alt, Hack Nerd Font)
+- Host file for Kirks-MacBook-Air (`RSPEC_CORES=10`)
+
+### Changed
+- Linux-only env (Android Studio/JDK, LIBGL, voice-to-text credentials) moved
+  from `.zshrc` to `os/linux.zsh`; CUDA/linuxbrew PATH guarded to Linux
+- tmux and Alacritty use `/bin/zsh`; Alacritty starts a login shell
+- tmux copy uses `pbcopy` on macOS, `xclip` on Linux (`copy-command`)
+- `.gitconfig` calls `gh` from PATH instead of `/usr/bin/gh`
+- fzf integration prefers `fzf --zsh`, keeping the old paths as fallbacks
+- `DEV_DIR` (default `~/dev`) drives `WORK_DIR` and the `agent` function
+- `RSPEC_CORES`, `DEV_DIR`, `WORK_DIR` are overridable defaults
+- Arch list adds `fzf` and `git-delta` (the git pager)
+
+### Fixed
+- PATH added `~/.dotfiles/bin` (empty) instead of `~/bin`; tmux `prefix y`
+  pointed at the nonexistent `~/.dotfiles/bin/wt`
+- `opentmux` ran in non-terminal shells (editors, agents, scripts) and created
+  stray tmux sessions; it now needs a TTY
+- `gdm` used `$base_branch` without setting it
+- `git-up` called `base_branch`, which scripts don't load
+- `pa` used GNU-only `ls --indicator-style`
+- `wd` used `\s` in sed, which BSD sed doesn't support
+- `ka` parsed `ps aux` with `cut -d' '` (wrong column); now `pkill -f`
+- `setup_steps/ruby.sh` called `chruby` without loading it
+- `setup_steps/shell.sh` would `chsh` to `/usr/bin/zsh` even when already zsh
+
 ## [2026-02-13] - Dependencies Documentation & git-up
 
 ### Added

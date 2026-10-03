@@ -44,18 +44,23 @@ prompt filthy
 [[ -f ~/.aliases ]] && source ~/.aliases
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
-if [ -d "/home/linuxbrew" ]; then
+# fzf >= 0.48 ships its own zsh integration; older distro packages
+# (e.g. Ubuntu's) only install the scripts.
+if fzf --zsh > /dev/null 2>&1; then
+  source <(fzf --zsh)
+elif [ -d "/home/linuxbrew" ]; then
   source /home/linuxbrew/.linuxbrew/opt/fzf/shell/completion.zsh
   source /home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh
 elif [ -d "/usr/share/doc/fzf/examples" ]; then
   source /usr/share/doc/fzf/examples/key-bindings.zsh
   source /usr/share/doc/fzf/examples/completion.zsh
-else
+elif [ -f "/usr/share/fzf/key-bindings.zsh" ]; then
   source /usr/share/fzf/key-bindings.zsh
   source /usr/share/fzf/completion.zsh
 fi
 
-opentmux
+# Only prompt for tmux in a real terminal (not editor/agent/script shells).
+[[ -t 0 && -t 1 ]] && opentmux
 
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -63,22 +68,10 @@ export NVM_DIR="$HOME/.config/nvm"
 
 export PATH="$HOME/.local/bin:$PATH"
 
-# Android SDK
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-
-# Google Cloud credentials for voice-to-text
-export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.config/gcloud/speech-to-text-key.json"
+# OS-specific interactive config (~/.zsh/os/linux.zsh, ~/.zsh/os/darwin.zsh)
+[[ -f ~/.zsh/os/$DOTFILES_OS.zsh ]] && source ~/.zsh/os/$DOTFILES_OS.zsh
 
 # Source secrets (API tokens, etc.) from outside the repo
 [[ -f ~/.secrets ]] && source ~/.secrets
-
-# Android Studio & JDK 17 for React Native
-export ANDROID_STUDIO_HOME="$HOME/opt/android-studio"
-export JAVA_HOME="$HOME/opt/jdk/jdk-17.0.14+7"
-export ANDROID_HOME="$HOME/Android/Sdk"
-export PATH="$ANDROID_STUDIO_HOME/bin:$JAVA_HOME/bin:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
-export LIBGL_DRIVERS_PATH="/usr/lib/x86_64-linux-gnu/dri"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -87,6 +87,8 @@ gd() {
 }
 
 gdm() {
+  local base_branch=$(base_branch)
+
   if [[ $base_branch == "main" ]]; then
     git branch --merged origin/main | grep -v main | xargs git branch -d
   elif [[ $base_branch == "develop" ]]; then
@@ -135,7 +137,9 @@ changes() {
 }
 
 pa() {
-  root_dir=$(pwd)
-  ls -1 -d */ --indicator-style=none --color=never | xargs -I{} sh -c "echo {} && cd $root_dir/{} && git-up"
-  cd $root_dir
+  local dir
+  for dir in */; do
+    echo "${dir%/}"
+    (cd "$dir" && git-up)
+  done
 }

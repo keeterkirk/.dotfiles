@@ -1,11 +1,40 @@
 # Dotfiles Architecture
 
-**Last Updated:** 2026-02-13
+**Last Updated:** 2026-10-03
 **For:** Future Claude sessions and reference
 
 ## Overview
 
-This is a **stow-based dotfiles system** for managing configuration files across a Linux system (Arch/Endeavour OS with i3wm).
+This is a **stow-based dotfiles system** for managing configuration files across
+Linux (Arch/Endeavour OS with i3wm, plus Ubuntu/Debian) and macOS machines.
+
+## Multi-OS Layout (2026-10-03)
+
+The same repo serves Linux and macOS without per-OS branches:
+
+- **Package lists:** `stow_all` stows `packages/common` plus `packages/linux` or
+  `packages/darwin`. i3 and polybar are Linux-only; `alacritty-macos` is
+  macOS-only. `stow_all` uses `-d <repo> -t $HOME`, so it works from any clone
+  location.
+- **Bootstrap:** `setup` dispatches on `uname -s` to `setup_steps/arch.sh`
+  (yay) or `setup_steps/macos.sh` (Xcode CLT, Homebrew, `brew bundle` from
+  `Brewfile`, Alacritty DMG), then runs the shared steps.
+- **Zsh:** `.zshenv` sets `DOTFILES_OS` (`linux`/`darwin`) and
+  `DOTFILES_HOST`. `.zshrc` sources `~/.zsh/os/$DOTFILES_OS.zsh`; `.zshenv`
+  sources `~/.zsh/hosts/$DOTFILES_HOST.zsh` before the overridable defaults
+  (`DEV_DIR`, `WORK_DIR`, `RSPEC_CORES`).
+- **Homebrew** is initialized in `.zprofile`, not `.zshenv`: macOS's
+  `/etc/zprofile` runs `path_helper`, which reorders PATH after `.zshenv`.
+- **Configs that can't branch** use portable values instead: `/bin/zsh`
+  (exists on macOS and merged-/usr Linux) in tmux and Alacritty, `gh` from
+  PATH in `.gitconfig`, tmux `copy-command` chosen by `if-shell uname`,
+  `fzf --zsh` with fallbacks for older distro fzf.
+- **Alacritty on macOS:** the Homebrew cask was disabled 2026-09-01
+  (fails Gatekeeper), so `macos.sh` installs the GitHub release DMG and clears
+  quarantine. `alacritty.toml` imports `~/.config/alacritty/macos.toml`
+  (Option-as-Alt, Hack Nerd Font); missing imports are skipped on Linux.
+- **bob** stores Neovim in `~/Library/Application Support/bob/nvim-bin` on
+  macOS vs `~/.local/share/bob/nvim-bin` on Linux; both are on PATH.
 
 ## How Stow Works
 
@@ -58,10 +87,9 @@ Each subdirectory in `~/.dotfiles/` is a "package":
 
 ### Managing Packages
 
-**Install all packages:**
+**Install all packages for this OS:**
 ```bash
-cd ~/.dotfiles
-./stow_all
+~/.dotfiles/stow_all
 ```
 
 **Install specific package:**
@@ -200,9 +228,9 @@ See `~/bin/VOICE_TO_TEXT_README.md` for complete setup instructions.
    stow -vv newpackage
    ```
 
-4. Add to `stow_all`:
+4. Add to the package list for the OSes that should get it:
    ```bash
-   echo "stow -vv newpackage" >> stow_all
+   echo "newpackage" >> packages/common   # or packages/linux, packages/darwin
    ```
 
 ### Adding Scripts to `bin`
@@ -262,15 +290,12 @@ ls -la ~/.gitconfig
 # 1. Clone dotfiles
 git clone git@github.com:keeterkirk/.dotfiles.git ~/.dotfiles
 
-# 2. Run setup script
+# 2. Run setup script (detects Linux vs macOS, installs packages, runs stow_all)
 cd ~/.dotfiles
 bash setup
 
-# 3. Stow all packages
-./stow_all
-
-# 4. Install dependencies (optional)
-# See individual package READMEs or setup scripts
+# 3. Put your git identity in ~/.gitconfig.local
+# 4. Optionally add zsh/.zsh/hosts/<host>.zsh for machine-specific env
 ```
 
 ## Troubleshooting
@@ -300,15 +325,13 @@ find ~ -maxdepth 3 -xtype l -delete 2>/dev/null
 
 ### Bin Scripts Not Found
 
-Make sure `~/bin` is in your PATH (should be automatic in `.zshrc`):
+`~/bin` is added to PATH in `.zshenv` and `.zprofile`. (Before 2026-10-03
+they added `~/.dotfiles/bin` instead, which only contains the `bin/`
+subdirectory, so the scripts were only found where something else added
+`~/bin`.)
 
 ```bash
 echo $PATH | grep -o "$HOME/bin"
-```
-
-If not, add to `.zshrc`:
-```bash
-export PATH="$HOME/bin:$PATH"
 ```
 
 ### "command not found: git-up"
@@ -362,7 +385,7 @@ package/.config/app/
 ## For Future Claude Sessions
 
 ### Quick Context
-- **System:** Arch Linux, i3wm, Alacritty, Tmux, Neovim
+- **Systems:** Arch Linux (i3wm, polybar) and macOS; shared Alacritty, Tmux, Neovim, Zsh
 - **Package Manager:** Stow
 - **Shell:** Zsh
 - **Key principle:** `~/.dotfiles/PACKAGE/path/` → `~/path/`
@@ -386,8 +409,9 @@ package/.config/app/
 3. Use `git add -A` to let git detect renames
 
 ### Files to Check
-- `stow_all` - Lists all packages
-- `setup` - Initial setup script
+- `packages/*` - Which packages each OS stows
+- `setup` - Initial setup script (dispatches to `setup_steps/arch.sh` / `macos.sh`)
+- `Brewfile` - macOS packages
 - Individual package READMEs - Package-specific docs
 
 ## Resources

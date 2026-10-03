@@ -1,0 +1,8 @@
+# Imported by alacritty.toml on macOS (stowed via packages/darwin).
+
+[window]
+# Let Option act as Alt/Meta so zsh vi-mode, tmux and nvim Alt bindings work.
+option_as_alt = "Both"
+
+[font.normal]
+family = "Hack Nerd Font"

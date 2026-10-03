@@ -1,11 +1,12 @@
 set_default_shell() {
-  if [ $SHELL == $1 ]; then
-    echo "skipping change shell: shell is already $1"
+  if [ "$(basename "$SHELL")" = "zsh" ]; then
+    echo "skipping change shell: shell is already $SHELL"
   else
     echo "setting shell to $1"
-    chsh -s $1
+    chsh -s "$1"
   fi
   echo ""
 }
 
-set_default_shell "/usr/bin/zsh"
+# /bin/zsh exists on macOS and on merged-/usr Linux (Arch, Ubuntu 20.04+).
+set_default_shell "/bin/zsh"

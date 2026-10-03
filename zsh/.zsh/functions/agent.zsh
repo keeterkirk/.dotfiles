@@ -2,5 +2,5 @@
 # Usage: agent <agent-name> [prompt]
 # The sniffer auto-detects work/home profile
 function agent() {
-  ~/dev/claude-agents/scripts/run-agent.sh "$@"
+  "$DEV_DIR/claude-agents/scripts/run-agent.sh" "$@"
 }

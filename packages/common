@@ -1,0 +1,8 @@
+# Stowed on every OS. One package per line.
+alacritty
+bin
+git
+neovim
+tig
+tmux
+zsh
