@@ -24,6 +24,9 @@ All notable changes to this dotfiles repository.
 - `DEV_DIR` (default `~/dev`) drives `WORK_DIR` and the `agent` function
 - `RSPEC_CORES`, `DEV_DIR`, `WORK_DIR` are overridable defaults
 - Arch list adds `fzf` and `git-delta` (the git pager)
+- `setup_steps/ruby.sh` builds Ruby on macOS with `ac_cv_func_pipe2=no
+  ac_cv_func_dup3=no`: macOS 26's SDK makes configure detect them, but they
+  resolve to NULL at runtime and miniruby segfaults mid-build
 
 ### Fixed
 - PATH added `~/.dotfiles/bin` (empty) instead of `~/bin`; tmux `prefix y`
@@ -35,7 +38,8 @@ All notable changes to this dotfiles repository.
 - `pa` used GNU-only `ls --indicator-style`
 - `wd` used `\s` in sed, which BSD sed doesn't support
 - `ka` parsed `ps aux` with `cut -d' '` (wrong column); now `pkill -f`
-- `setup_steps/ruby.sh` called `chruby` without loading it
+- `setup_steps/ruby.sh` called `chruby` without loading it, and kept going
+  (installing gems into system Ruby) when the build failed
 - `setup_steps/shell.sh` would `chsh` to `/usr/bin/zsh` even when already zsh
 
 ## [2026-02-13] - Dependencies Documentation & git-up

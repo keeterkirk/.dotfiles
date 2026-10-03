@@ -12,6 +12,8 @@ Works on a fresh Endeavour/Arch install or a fresh Mac. `setup` detects the OS
 Before running the below commands:
 
 * Make sure you can clone from GitHub by adding your SSH key to your profile.
+  `.gitconfig` rewrites `https://github.com/` to SSH, so plugin installs and
+  pushes fail until the key is set up.
 * Clone to `~/.dotfiles` (configs reference that path). On a Mac, don't put it
   in `~/Desktop` or `~/Documents` if iCloud Desktop & Documents sync is on.
 
