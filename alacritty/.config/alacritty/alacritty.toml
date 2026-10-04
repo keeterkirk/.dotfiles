@@ -51,6 +51,6 @@ size = 16.0
 
 # /bin/zsh exists on macOS and on merged-/usr Linux. Run it as a login shell
 # so .zprofile (Homebrew, chruby) loads; macOS terminals expect that.
-[shell]
+[terminal.shell]
 program = "/bin/zsh"
 args = ["-l"]
